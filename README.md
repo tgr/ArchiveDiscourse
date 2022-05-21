@@ -1,2 +1,2 @@
 # ArchiveDiscourse
-Code for archiving my Discourse sites
+Script for archiving Discourse sites. From [mcmcclur/ArchiveDiscourse](https://github.com/mcmcclur/ArchiveDiscourse).
