@@ -309,14 +309,16 @@ for topic in topic_list:
     if args.wait:
         sleep(args.wait)  # Seems the polite thing to do
 while (
-    "more_topics_url" in response.json()["topic_list"].keys()
+    "more_topics_url" in response.json().get("topic_list", {}).keys()
     and cnt < args.max_more_topics
 ):
     print("cnt is ", cnt, "\n============")
     cnt = cnt + 1
     url = base_topic_url + str(cnt)
     response = requests.get(url)
-    topic_list = response.json()["topic_list"]["topics"]
+    # FIXME Sometimes topic_list is not present. Not sure if that's normal.
+    # For now opt for a possibly incomplete topic list over a hard fail.
+    topic_list = response.json().get("topic_list", {}).get("topics", [])
     for topic in topic_list[1:]:  ## STARTED AT 1 'CAUSE IT APPEARS THAT
         ## LAST THIS = FIRST NEXT   GOTTA CHECK THAT!
         topic_list_string = topic_list_string + topic_row(topic)
